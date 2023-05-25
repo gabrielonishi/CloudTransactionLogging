@@ -28,6 +28,12 @@ resource "aws_iam_role" "lambda-write-role" {
       Principal = {
         Service = "lambda.amazonaws.com"
       }
+    }, {
+      Action = "sts:AssumeRole"
+      Effect = "Allow"
+      Principal = {
+        Service = "apigateway.amazonaws.com"
+      }
     }]
   })
 }
@@ -126,7 +132,17 @@ resource "aws_iam_role_policy_attachment" "lambda-read-attach" {
   role       = aws_iam_role.lambda-read-role.name
 }
 
+resource "aws_iam_role_policy_attachment" "read-basic-exec-attach" {
+  role       = aws_iam_role.lambda-read-role.name
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+}
+
 resource "aws_iam_role_policy_attachment" "lambda-write-attach" {
   policy_arn = aws_iam_policy.lambda-write-policy.arn
   role       = aws_iam_role.lambda-write-role.name
+}
+
+resource "aws_iam_role_policy_attachment" "write-basic-exec-attach" {
+  role       = aws_iam_role.lambda-write-role.name
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
 }
