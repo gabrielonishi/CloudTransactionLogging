@@ -44,12 +44,25 @@ resource "aws_iam_policy" "lambda-read-policy" {
         "s3-object-lambda:Get*",
         "s3-object-lambda:List*"
       ]
-      Resource = ["*"]
+      Resource = [aws_s3_bucket.client-log-storage.arn]
       }, {
       Effect = "Allow"
       Action = [
+
         "kms:Decrypt",
-        "kms:DescribeKey"
+        "kms:DescribeKey",
+        "kms:CreateAlias",
+        "kms:CreateKey",
+        "kms:DeleteAlias",
+        "kms:Describe*",
+        "kms:GenerateRandom",
+        "kms:Get*",
+        "kms:List*",
+        "kms:TagResource",
+        "kms:UntagResource",
+        "iam:ListGroups",
+        "iam:ListRoles",
+        "iam:ListUsers"
       ]
       Resource = [aws_kms_key.master_key.arn]
     }]
@@ -71,7 +84,19 @@ resource "aws_iam_policy" "lambda-write-policy" {
       Effect = "Allow"
       Action = [
         "kms:Encrypt",
-        "kms:DescribeKey"
+        "kms:DescribeKey",
+        "kms:CreateAlias",
+        "kms:CreateKey",
+        "kms:DeleteAlias",
+        "kms:Describe*",
+        "kms:GenerateRandom",
+        "kms:Get*",
+        "kms:List*",
+        "kms:TagResource",
+        "kms:UntagResource",
+        "iam:ListGroups",
+        "iam:ListRoles",
+        "iam:ListUsers"
       ]
       Resource = [aws_kms_key.master_key.arn]
     }]

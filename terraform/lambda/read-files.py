@@ -15,8 +15,8 @@ def lambda_handler(event, context):
         
         return {
             'statusCode': 200,
-            'body': parsed_data
+            'body': json.dumps(parsed_data)
         }
     except Exception as e:
         print(e)
-        raise(e)
+        raise e

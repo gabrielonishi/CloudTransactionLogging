@@ -6,6 +6,8 @@ resource "aws_s3_bucket" "client-log-storage" {
     Name        = "projetoOnishi"
     Environment = "Dev"
   }
+
+  force_destroy = true
 }
 
 # Configuração da criptografia
