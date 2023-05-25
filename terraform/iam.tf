@@ -44,7 +44,7 @@ resource "aws_iam_policy" "lambda-read-policy" {
         "s3-object-lambda:Get*",
         "s3-object-lambda:List*"
       ]
-      Resource = [aws_s3_bucket.client-log-storage.arn]
+      Resource = ["*"]
       }, {
       Effect = "Allow"
       Action = [
@@ -76,14 +76,15 @@ resource "aws_iam_policy" "lambda-write-policy" {
     Statement = [{
       Effect = "Allow"
       Action = [
-        "s3:Put*",
-        "s3-object-lambda:Put*",
+        "s3:*",
+        "s3-object-lambda:*",
       ]
       Resource = ["*"]
       }, {
       Effect = "Allow"
       Action = [
         "kms:Encrypt",
+        "kms:Decrypt",
         "kms:DescribeKey",
         "kms:CreateAlias",
         "kms:CreateKey",
@@ -94,11 +95,28 @@ resource "aws_iam_policy" "lambda-write-policy" {
         "kms:List*",
         "kms:TagResource",
         "kms:UntagResource",
+        "kms:GenerateDataKey",
+        "kms:ReEncrypt*",
+        "kms:DescribeKey",
+        "kms:CreateGrant",
         "iam:ListGroups",
         "iam:ListRoles",
         "iam:ListUsers"
       ]
       Resource = [aws_kms_key.master_key.arn]
+      }, {
+      Effect = "Allow"
+      Action = [
+        "s3:PutObject",
+        "s3:GetObject"
+      ]
+      Resource = [aws_s3_bucket.client-log-storage.arn]
+      }, {
+      Effect = "Allow"
+      Action = [
+        "apigateway:*"
+      ]
+      Resource = ["arn:aws:apigateway:*::/*"]
     }]
   })
 }

@@ -26,7 +26,7 @@ def lambda_handler(event, context):
         if content_type != 'application/json':
             return {
                 'statusCode': 400,
-                'body': 'Invalid content type. Expected application/json.'
+                'body': json.dumps('Invalid content type. Expected application/json.')
             }
         
         # Parse the JSON data
@@ -35,7 +35,7 @@ def lambda_handler(event, context):
         except json.JSONDecodeError:
             return {
                 'statusCode': 400,
-                'body': 'Invalid JSON data.'
+                'body': json.dumps('Invalid JSON data.')
             }
         
         # Generate a unique key for the S3 object (you can modify this as per your requirements)
@@ -46,7 +46,7 @@ def lambda_handler(event, context):
         
         return {
             'statusCode': 200,
-            'body': 'File uploaded successfully'
+            'body': json.dumps('File uploaded successfully')
         }
         
     except Exception as e:
