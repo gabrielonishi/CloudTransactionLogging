@@ -46,6 +46,7 @@ resource "aws_iam_policy" "s3_manager_policy" {
         "kms:GenerateRandom",
         "kms:Get*",
         "kms:List*",
+        "kms:GenerateDataKey",
         "kms:TagResource",
         "kms:UntagResource",
         "iam:ListGroups",
