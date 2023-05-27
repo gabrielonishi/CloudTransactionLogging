@@ -1,5 +1,3 @@
-# Arquivo com setup de providers e versões
-# utilizando região us-east-1
 terraform {
   required_providers {
     aws = {
